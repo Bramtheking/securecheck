@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createHash } from 'crypto'
 
-export const runtime = 'nodejs'
-
+// Use Node.js runtime for crypto support
 export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json()

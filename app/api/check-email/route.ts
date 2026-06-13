@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'edge'
-
+// Remove edge runtime for better Netlify compatibility
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json()

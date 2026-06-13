@@ -26,59 +26,82 @@ npm run dev
 
 ## Deploy to Netlify
 
-### Important: Netlify Configuration
-This app uses Next.js API routes which are automatically converted to Netlify Functions. Make sure you:
+### IMPORTANT: Netlify Setup Steps
 
-1. Install all dependencies including `@netlify/plugin-nextjs`
-2. The `netlify.toml` file is properly configured
-3. Use Node.js 18 or higher
+**Before deploying, follow these exact steps:**
 
-### Option 1: Git Deploy (Recommended)
-1. Push your code to GitHub/GitLab/Bitbucket
-2. Go to [Netlify](https://app.netlify.com)
-3. Click "Add new site" → "Import an existing project"
-4. Connect your repository
-5. Build settings are auto-detected from `netlify.toml`:
+1. **In your Netlify site dashboard:**
+   - Go to **Site configuration** → **Build & deploy** → **Build settings**
    - Build command: `npm run build`
    - Publish directory: `.next`
-6. Click "Deploy site"
-7. Wait for deployment to complete
 
-### Option 2: Netlify CLI
+2. **Install the Netlify Next.js Plugin:**
+   - Go to **Integrations** → **Search "Next.js Runtime"**
+   - Click **Enable** or **Install**
+   - OR it will auto-detect from `netlify.toml`
+
+3. **Environment (if needed):**
+   - Go to **Site configuration** → **Environment variables**
+   - Set `NODE_VERSION` to `18` (usually auto-detected from `.nvmrc`)
+
+### Deployment Methods
+
+#### Option 1: Git Deploy (Recommended)
 ```bash
-# Install Netlify CLI
+# Push to your repository
+git add .
+git commit -m "Deploy to Netlify"
+git push
+
+# Netlify will auto-deploy when connected
+```
+
+1. Go to [Netlify](https://app.netlify.com)
+2. Click "Add new site" → "Import an existing project"  
+3. Connect your Git repository (GitHub/GitLab/Bitbucket)
+4. Netlify will auto-detect Next.js settings
+5. Click "Deploy site"
+
+#### Option 2: Netlify CLI
+```bash
+# Install Netlify CLI globally
 npm install -g netlify-cli
 
-# Login to Netlify
+# Login
 netlify login
 
-# Initialize and link (first time only)
-netlify init
+# Link to site (first time)
+netlify link
 
 # Deploy to production
-netlify deploy --prod
+netlify deploy --prod --build
 ```
 
-### Troubleshooting Netlify Deployment
+### Troubleshooting 404 on API Routes
 
-If you get 404 errors on API routes:
-1. Check that `@netlify/plugin-nextjs` is in your `package.json`
-2. Clear build cache and redeploy
-3. Check build logs for any errors
-4. Ensure Node.js version is 18+ (specified in `.nvmrc`)
+If API routes return 404 after deployment:
 
-### Testing Locally Before Deploy
-```bash
-# Install dependencies
-npm install
+1. **Check Build Logs:**
+   - Look for "@netlify/plugin-nextjs" in build logs
+   - Should see "Installing Next.js Runtime"
 
-# Run dev server
-npm run dev
+2. **Clear Cache & Redeploy:**
+   ```
+   Site Settings → Build & Deploy → Clear Cache and Deploy Site
+   ```
 
-# Test the API routes at:
-# http://localhost:3000/api/check-email
-# http://localhost:3000/api/check-password
-```
+3. **Verify Plugin Installation:**
+   - Go to Integrations tab
+   - Ensure "Next.js Runtime" is enabled
+
+4. **Check Function Logs:**
+   - Go to Functions tab in Netlify
+   - You should see functions created for your API routes
+
+5. **Manual Plugin Install (if needed):**
+   - In site settings, go to Plugins
+   - Search for "Essential Next.js"
+   - Click Install/Enable
 
 ## Environment
 
