@@ -8,11 +8,16 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Redirects for Next.js API routes
+[functions]
+  directory = ".netlify/functions"
+  node_bundler = "esbuild"
+
+# Important: Ensure API routes work as functions
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/___netlify-handler/:splat"
   status = 200
+  force = true
 
 [[headers]]
   for = "/*"
