@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 export const metadata: Metadata = {
-  title: 'SecureCheck Pro - Advanced Security Monitoring',
-  description: 'Professional security monitoring tool to check if your email or password has been compromised in data breaches',
+  title: 'SecureCheck Pro - Have You Been Pwned?',
+  description: 'Check if your email or password has been compromised in data breaches. Search billions of leaked credentials for free.',
 }
 
 export default function RootLayout({
@@ -13,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        <main className="main-content">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   )
 }
